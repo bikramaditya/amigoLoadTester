@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="Amigo.ScriptReplayWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
+             Name="replay_window">
+    <Grid>
+        <DockPanel VerticalAlignment="Stretch" MinHeight="550">
+            <Border DockPanel.Dock="Left" Style="{DynamicResource ResourceKey=BorderStyle}" MinWidth="300" MaxWidth="300">
+                <TabControl VerticalAlignment="Stretch" Height="Auto" VerticalContentAlignment="Center" Style="{DynamicResource BreadCrumbTabControl}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
+                    <TabItem VerticalContentAlignment="Stretch" Header=" Chosen Script (Set Of Requests) " Style="{DynamicResource LeftTabItem}" FontSize="16" Background="Transparent">
+                        <TreeView Name="script_root_tree1" Foreground="White" Background="Transparent" FontSize="12">
+                            <TreeViewItem Name="verify_script_tree" Foreground="White" IsExpanded="True">
+                                <TreeViewItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="pack://application:,,,/icons/session.png" Height="20" Width="20"></Image>
+                                        <Label Name="recording_session_name" Foreground="White"></Label>
+                                    </StackPanel>
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+                            <TreeView.ItemContainerStyle>
+                                <Style TargetType="{x:Type TreeViewItem}">
+                                    <EventSetter Event="RequestBringIntoView" Handler="script_root_tree_RequestBringIntoView"/>
+                                </Style>
+                            </TreeView.ItemContainerStyle>
+                        </TreeView>
+                    </TabItem>                    
+                </TabControl>
+            </Border>
+            <Border Name="center_pane" Style="{DynamicResource ResourceKey=BorderStyle}" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Vertical">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Height="45">
+                            <Button Name="test_now_button" Style="{DynamicResource BlueButton}" Foreground="White" Height="40" IsEnabled="{Binding test_now_button_status, Mode=TwoWay}" Margin="50,0,0,0" Click="test_now_button_Click">
+                                <Image Source="pack://application:,,,/icons/replay.png" Height="40" Width="40"></Image>
+                            </Button>
+                            <Button Name="stop_now_button" Style="{DynamicResource BlueButton}" Foreground="White" Height="40" IsEnabled="{Binding stop_now_button_status, Mode=TwoWay}" Margin="50,0,0,0" Click="stop_now_button_Click">
+                                <Image x:Name="stop_image" Source="pack://application:,,,/icons/stop.png" Height="40" Width="40" ></Image>
+                            </Button>
+                            <Border VerticalAlignment="Center" Margin="50,0,0,0">
+                                <StackPanel>
+                                    <CheckBox Content="Run Slowly" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" FontSize="14" VerticalAlignment="Center" Foreground="White" IsChecked="True"/>
+                                    <CheckBox Content="Enhance Cookie handling" Checked="Enable_Yummy_Cookies" Unchecked="Enable_Yummy_Cookies" FontSize="14" VerticalAlignment="Center" Foreground="White"  IsChecked="True"/>
+                                </StackPanel>
+                            </Border>
+                            <Border BorderBrush="#60000000"  Margin="50,0,0,0" >
+                                <Grid Margin="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Name="iteration_text_box" TextAlignment="Right" Height="20" Width="50" Grid.Column="0" Text="1" IsReadOnly="{Binding stop_now_button_status, Mode=TwoWay}" />
+                                    <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0">
+                                        <Button x:Name="Increase" Click="Increase_Click" IsEnabled="{Binding test_now_button_status, Mode=TwoWay}">
+                                            <Image Source="pack://application:,,,/icons/up.png" Height="15" Width="15"  />
+                                        </Button>
+                                        <Button x:Name="Decrease" Click="Decrease_Click" IsEnabled="{Binding test_now_button_status, Mode=TwoWay}">
+                                            <Image Source="pack://application:,,,/icons/down.png" Height="15" Width="15" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Grid>
+                            <ProgressBar Name="ItrProgressBar" Width="150" Height="30" Margin="20,0,0,0"/>
+                                <Label Name="itrNumber" Content="Processing Iteration: " Foreground="White" FontSize="14" VerticalContentAlignment="Center" Margin="20,0,0,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}" HorizontalAlignment="Stretch" >                        
+                        <WebBrowser  Name="preview_browser" Margin="10,10,10,10" UseLayoutRounding="True" Height="400"></WebBrowser>                           
+                    </Border>
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}" HorizontalAlignment="Stretch" >
+                        <StackPanel Orientation="Vertical">
+                            <TextBox Name="log_text_box" Margin="10,10,10,10" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </DockPanel>
+    </Grid>
+</UserControl>

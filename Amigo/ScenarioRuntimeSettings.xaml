@@ -1,0 +1,322 @@
+﻿<UserControl x:Class="Amigo.ScenarioRuntimeSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="OfficeTab.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Border  Style="{DynamicResource ResourceKey=ZeroBorderStyle}">
+            <TabControl Name="scenarioTabs" TabStripPlacement="Left" Style="{DynamicResource BreadCrumbTabControl}" Background="Transparent">
+                <TabItem Header="Scenario Objective" Style="{DynamicResource BreadCrumbThinTabItem}">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10" Foreground="White">Load based or goal based scenario</TextBlock>
+                            <Separator Margin="10"/>
+                            <RadioButton Name="goalBased" Margin="10" Checked="goalBased_Checked">
+                                <TextBlock Text="Achieve certain TPS load" Foreground="White"/>
+                            </RadioButton>
+                            <RadioButton Name="loadBased" Margin="10" Checked="loadBased_Checked">
+                                <TextBlock Text="Achieve certain Concurrent User load" Foreground="White"/>
+                            </RadioButton>                            
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="VUsers and Load" Style="{DynamicResource BreadCrumbThinTabItem}">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10">Set number of users or target load in TPS</TextBlock>
+                            <Separator Margin="10"/>
+                            <StackPanel Orientation="Horizontal" Height="20"  Margin="10,20,0,0">
+                                <TextBlock Text="TPS load :" Foreground="White" xml:space="preserve" Width="100" HorizontalAlignment="Stretch"/>
+                                <TextBox Name="tps_value" Width="100" Margin="20,0,0,0" LostFocus="text_field_LostFocus" Text="0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="20"  Margin="10,20,0,0">
+                                <TextBlock Text="Number of Users :" Foreground="White" xml:space="preserve"  Width="100" HorizontalAlignment="Stretch"/>
+                                <TextBox Name="noof_user_value" Width="100" Margin="20,0,0,0" LostFocus="text_field_LostFocus" Text="0"/>
+                            </StackPanel>
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Test Duration" Style="{DynamicResource BreadCrumbThinTabItem}" LostFocus="execution_time_TabItem_LostFocus">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10">Specify duration of load test</TextBlock>
+                            <Separator Margin="10"/>
+                            <StackPanel Orientation="Horizontal" Height="25"  Margin="10,20,0,0">
+                                <TextBlock Text="Test Duration :" Foreground="White" xml:space="preserve" HorizontalAlignment="Left"/>
+                                <TextBox Name="duration_hr_value" Width="100" Margin="20,0,0,5" Height="25" LostFocus="text_field_LostFocus"/>
+                                <TextBlock Text="Hour(s)" Foreground="White" xml:space="preserve" HorizontalAlignment="Left"/>
+                                <TextBox Name="duration_min_value" Width="50" Margin="10,0,0,5" Height="25" LostFocus="text_field_LostFocus"/>
+                                <TextBlock Text="Minutes(s)" Foreground="White" xml:space="preserve" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Ramp Up / Down" Style="{DynamicResource BreadCrumbThinTabItem}" LostFocus="execution_time_TabItem_LostFocus">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10">Specify Ramp Up and Ramp Down</TextBlock>
+                            <StackPanel Orientation="Horizontal" Height="25"  Margin="10,20,0,0">
+                                <TextBlock Text="Ramp Up Steps :" Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch" Width="150"/>
+
+                                <TextBox Name="ramp_step_user_value" Width="30" Margin="20,0,0,5" Height="25" LostFocus="text_field_LostFocus"/>
+                                <TextBlock Text="User(s) in every " Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch"/>
+
+                                <TextBox Name="ramp_step_duration_min_value" Width="30" Margin="20,0,0,5" Height="25" LostFocus="text_field_LostFocus"/>
+                                <TextBlock Text="Minute" Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch"/>
+                                <TextBox Name="ramp_Down_duration_sec_value" Width="30" Margin="10,0,0,5" Height="25" LostFocus="text_field_LostFocus"/>
+                                <TextBlock Text="and Second" Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                            <Separator Margin="10,30,10,10"/>
+                            <StackPanel Orientation="Horizontal" Height="25"  Margin="10,20,0,0">
+                                <TextBlock Text="Ramp Up Duration :" Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch" Width="150"/>
+                                <TextBox Name="ramp_up_duration_hr_value" Width="30" Margin="20,0,0,5" Height="25" LostFocus="text_field_LostFocus" IsReadOnly="True"/>
+                                <TextBlock Text="Hour(s)" Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch"/>
+                                <TextBox Name="ramp_up_duration_min_value" Width="30" Margin="10,0,0,5" Height="25" LostFocus="text_field_LostFocus" IsReadOnly="True"/>
+                                <TextBlock Text="Minutes(s)" Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch"/>
+                                <Button Name="validate_rampup" Style="{DynamicResource BlueButton}" Content=" Calculate RampUp " Margin="15,0,0,0"
+                                    Height="25" Width="120" Foreground="White" FontSize="10" Click="validate_rampup_Click"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="25"  Margin="10,20,0,0">
+                                <TextBlock Text="Ramp Down Duration :" Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch" Width="150"/>
+                                <TextBox Name="ramp_Down_duration_hr_value" Width="30" Margin="20,0,0,5" Height="25" LostFocus="text_field_LostFocus" IsReadOnly="True"/>
+                                <TextBlock Text="Hour(s)" Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch"/>
+                                <TextBox Name="ramp_Down_duration_min_value" Width="30" Margin="10,0,0,5" Height="25" LostFocus="text_field_LostFocus" IsReadOnly="True"/>
+                                <TextBlock Text="Minutes(s)" Foreground="White" xml:space="preserve" HorizontalAlignment="Stretch"/>
+                            </StackPanel>                            
+                            <Separator Margin="10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Load Distribution" Style="{DynamicResource BreadCrumbThinTabItem}" >
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10" Foreground="White">Load distribution in % or in absolute virtual users</TextBlock>
+                            <Separator Margin="10"/>
+                            <RadioButton Name="percentage" Margin="10" Checked="percentage_Checked">
+                                <TextBlock Text="Distribute in % of total Users" Foreground="White"/>
+                            </RadioButton>
+                            <RadioButton Name="absolute" Margin="10">
+                                <TextBlock Text="Distribute in absolute number of total Users" Foreground="White"/>
+                            </RadioButton>
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Logging" Style="{DynamicResource BreadCrumbThinTabItem}">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10" Foreground="White">Log Settings</TextBlock>
+                            <Separator Margin="10"/>
+                            <RadioButton Name="logLevel0" Margin="10">
+                                <TextBlock Text="Do not log anything" Foreground="White"/>
+                            </RadioButton>
+                            <RadioButton Name="logLevel1" Margin="10">
+                                <TextBlock Text="Log only errors/exceptions" Foreground="White"/>
+                            </RadioButton>
+                            <RadioButton Name="logLevel2" Margin="10">
+                                <TextBlock Text="Log errors, parameter substitutions and request body" Foreground="White"/>
+                            </RadioButton>
+                            <RadioButton Name="logLevel3" Margin="10">
+                                <TextBlock Text="Log errors, parameters, request body and response body(Not Recomomended)" Foreground="Red"/>
+                            </RadioButton>
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Target Server" Style="{DynamicResource BreadCrumbThinTabItem}">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10">Specify the target server host and port</TextBlock>
+                            <Separator Margin="10"/>
+                            <StackPanel Orientation="Horizontal" Height="20"  Margin="10,20,0,0">
+                                <TextBlock Text="Host Name :" Foreground="White" xml:space="preserve" Width="100" HorizontalAlignment="Stretch"/>
+                                <TextBox Name="host_name_text" Width="300" Margin="20,0,0,0" LostFocus="text_field_LostFocus"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="20"  Margin="10,20,0,0">
+                                <TextBlock Text="Port Number :" Foreground="White" xml:space="preserve"  Width="100" HorizontalAlignment="Stretch"/>
+                                <TextBox Name="port_number_text" Width="100" Margin="20,0,0,0" LostFocus="text_field_LostFocus"/>
+                            </StackPanel>
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Error Handling" Style="{DynamicResource BreadCrumbThinTabItem}">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10" Foreground="White">Specify how to deal with runtime errors</TextBlock>
+                            <Separator Margin="10"/>
+                            <RadioButton Name="errorLevel0" Margin="10">
+                                <TextBlock Text="Ignore all errors and mark transactions as passed" Foreground="White"/>
+                            </RadioButton>
+                            <RadioButton Name="errorLevel1" Margin="10">
+                                <TextBlock Text="Log errors, fail the transaction and continue test" Foreground="White"/>
+                            </RadioButton>
+                            <RadioButton Name="errorLevel2" Margin="10">
+                                <TextBlock Text="Log errors and fail the test (Zero Tolerence)" Foreground="White"/>
+                            </RadioButton>
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Network Emulation" Style="{DynamicResource BreadCrumbThinTabItem}">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Left" Margin="10" Foreground="White">Simulate bandwidth for WAN emulation</TextBlock>
+                            <Separator Margin="10"/>
+                            <StackPanel Orientation="Horizontal" Margin="10,20,0,0">
+                                <TextBlock Text="Select the bandwidth to simulate :" Foreground="White" 
+                                       xml:space="preserve" HorizontalAlignment="Left" Margin="20,0,10,0"/>
+                                <ComboBox Name="band_width_combo">
+                                    <ComboBoxItem IsSelected="True">
+                                        <TextBlock Text="LAN (Use Max available)"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="56 Kbps"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="128 Kbps"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="256 Kbps"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="512 Kbps"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="1 Mbps"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="2 Mbps"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="10 Mbps"/>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Cache Settings" Style="{DynamicResource BreadCrumbThinTabItem}">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10" Foreground="White">Simulate browser's cache behaviour</TextBlock>
+                            <Separator Margin="10"/>
+                            <RadioButton Name="cacheEnabled" Margin="10">
+                                <TextBlock Text="Enable to Cache to simulate browser behaviour" Foreground="White"/>
+                            </RadioButton>
+                            <RadioButton Name="cacheDisabled" Margin="10">
+                                <TextBlock Text="Disable Cache and download all content always" Foreground="White"/>
+                            </RadioButton>
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Proxy Settings" Style="{DynamicResource BreadCrumbThinTabItem}">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10">Proxy Settings</TextBlock>
+                            <Separator Margin="10"/>
+                            <StackPanel Orientation="Horizontal" Height="20"  Margin="10,20,0,0">
+                                <TextBlock Text="Proxy Host Name :" Foreground="White" xml:space="preserve" Width="120" HorizontalAlignment="Stretch"/>
+                                <TextBox Name="proxy_host_name_text" Width="300" Margin="20,0,0,0" LostFocus="text_field_LostFocus"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="20"  Margin="10,20,0,0">
+                                <TextBlock Text="Proxy Port No. :" Foreground="White" xml:space="preserve"  Width="120" HorizontalAlignment="Stretch"/>
+                                <TextBox Name="proxy_port_number_text" Width="100" Margin="20,0,0,0" LostFocus="text_field_LostFocus"/>
+                            </StackPanel>
+                            <Separator Margin="10,30,10,10"/>
+                            <TextBlock Text="Explanation:" FontWeight="Bold" Foreground="White" Margin="10,10"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Review and Save" Style="{DynamicResource BreadCrumbThinTabItem}"  GotFocus="Review_save_TabItem_GotFocus">
+                    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Margin="10" Foreground="White">Review and Save</TextBlock>
+                            <Separator Margin="10"/>
+                            <Grid Name="runtime_summary_grid" HorizontalAlignment="Left" Margin="20,0,10,2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="350" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Content="Scenario Objective:" FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="0" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="1" Grid.Column="0" Content="Test Duration:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" Content="Ramp Up:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="2" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="3" Grid.Column="0" Content="Ramp Down:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="3" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="4" Grid.Column="0" Content="Ramp User Step:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="4" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="5" Grid.Column="0" Content="Load Distribution:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="5" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="6" Grid.Column="0" Content="Logging:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="6" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="7" Grid.Column="0" Content="Network Emulation:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="7" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="8" Grid.Column="0" Content="Enable Cache:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="8" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="9" Grid.Column="0" Content="Target Server:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="9" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="10" Grid.Column="0" Content="Error Handling:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="10" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+
+                                <Label Grid.Row="11" Grid.Column="0" Content="Proxy Settings:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                                <Label Grid.Row="11" Grid.Column="1" Content="Value:"  FontSize="13" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                            </Grid> 
+                            <Button Name="save_scenario_runtime" Style="{DynamicResource BlueButton}" 
+                                    Content=" Save and Close " Height="30" Width="150" Foreground="White" FontWeight="Bold" Click="save_scenario_runtime_Click"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+            </TabControl>
+        </Border>
+    </Grid>
+</UserControl>

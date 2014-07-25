@@ -1,0 +1,63 @@
+﻿<Window x:Class="Amigo.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:Amigo"
+  x:Name="MainWindow1" Title="Amigo Load Tester" 
+  WindowState="Maximized" Style="{StaticResource selectionStyle}"
+  Icon="pack://application:,,,/icons/session.png"
+        BorderBrush="LightBlue" BorderThickness="2">
+        <DockPanel VerticalAlignment="Stretch" Height="Auto" >
+        <Border DockPanel.Dock="Top" Height="55" Width="auto" Style="{DynamicResource ResourceKey=BorderStyle}">
+            <local:ButtonsPanel Margin="5"/>
+        </Border>
+        <Border DockPanel.Dock="Top" Height="10" Width="auto" Style="{DynamicResource ResourceKey=BorderStyle}"/>
+        <TabControl DockPanel.Dock="Top" VerticalAlignment="Stretch" VerticalContentAlignment="Center" 
+                    Style="{DynamicResource BreadCrumbTabControl}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" 
+                    Background="Transparent">
+            <TabItem VerticalContentAlignment="Stretch" Style="{DynamicResource LeftTabItem}" FontSize="14">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Width="250">
+                            <Image Source="pack://application:,,,/icons/session.png" Height="32" Width="32"/>
+                            <TextBlock Text="Script Studio" Margin="10,4,0,0" FontSize="14" FontWeight="DemiBold"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <local:ScriptStudio Margin="1"></local:ScriptStudio>
+            </TabItem>
+            <TabItem VerticalContentAlignment="Stretch" Style="{DynamicResource BreadCrumbTabItem}" FontSize="14" FontWeight="DemiBold">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Width="250">
+                            <Image Source="pack://application:,,,/icons/scenario.png" Height="32" Width="32"/>
+                            <TextBlock Text="Scenario Runtime Studio" Margin="10,4,0,0" FontWeight="DemiBold"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <local:ScenarioStudio Margin="1"></local:ScenarioStudio>
+            </TabItem>
+            <TabItem Name="Execution_Studio_Tab" VerticalContentAlignment="Stretch" Style="{DynamicResource BreadCrumbTabItem}" FontSize="14" FontWeight="DemiBold">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Width="250">
+                            <Image Source="pack://application:,,,/icons/execute.png" Height="32" Width="32"/>
+                            <TextBlock Text="Execution Studio" Margin="10,4,0,0" FontWeight="DemiBold" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <local:ExecutionStudio Margin="1"></local:ExecutionStudio>
+            </TabItem>
+            <TabItem VerticalContentAlignment="Stretch" Style="{DynamicResource BreadCrumbTabItem}" FontSize="14" FontWeight="DemiBold">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Width="250">
+                            <Image Source="pack://application:,,,/icons/report.png" Height="32" Width="32"/>
+                            <TextBlock Text="Reports Studio" Margin="10,4,0,0" FontWeight="DemiBold" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <local:ReportsStudio Margin="1"></local:ReportsStudio>
+            </TabItem>                        
+        </TabControl>
+    </DockPanel>
+</Window>

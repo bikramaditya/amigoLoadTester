@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="Amigo.AutoCorrelationWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Name="autoCorrelationUC">
+    <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+        <StackPanel>
+            <Label Content="Select the boundary set from following eligible matches" HorizontalAlignment="Center" Foreground="White" FontSize="14"/>                
+                <Label Name="paramName" Content="" HorizontalAlignment="Center" Foreground="White" FontSize="14"/>
+                <Label Name="paramValue" Content="Scanning for possible correlations..." HorizontalAlignment="Center" Foreground="White" FontSize="14"/>
+                <ProgressBar Name="corrProgressBar" Width="300" HorizontalAlignment="Center" Visibility="Visible" Height="20" Margin="5"/>
+                <DataGrid Name="autoCorrelationGrid" Margin="10"
+                        AlternatingRowBackground="LightBlue"                        
+                        AutoGenerateColumns="False"
+                        CanUserResizeColumns="True"
+                        CanUserAddRows="False"
+                        Background="Transparent"
+                        ColumnHeaderHeight="30"
+                        CanUserReorderColumns="False"                        
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto"
+                        MaxHeight="400"
+                        ItemsSource="{Binding}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="" Width="25">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <RadioButton IsChecked="{Binding Path=ISChecked}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Left Boundary" Foreground="Black" FontSize="14" Width="200" Binding="{Binding Path=LB}"/>
+                    <DataGridTextColumn Header="Right Boundary" Foreground="Black" FontSize="14" Width="200" Binding="{Binding Path=RB}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Style="{DynamicResource BlueButton}" IsEnabled="True" Name="select_button"  Height="40" Width="200" Margin="20,0,10,0" Click="select_button_Click">
+                <DockPanel>                    
+                    <Image x:Name="new_project_image" Source="pack://application:,,,/icons/save_project.png" Height="38" Width="38" HorizontalAlignment="Left"></Image>
+                    <TextBlock Text="Select and Close" FontSize="14" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0"/>
+                </DockPanel>
+            </Button>
+        </StackPanel>        
+    </Border>
+</UserControl>

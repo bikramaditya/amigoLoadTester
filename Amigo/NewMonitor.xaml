@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Amigo.NewMonitor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Background="Transparent" Width="450" Height="450">
+    <Grid>
+        <Border Height="auto" Width="auto" Style="{DynamicResource ResourceKey=BorderStyle}">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Create A New Monitor" Foreground="White" FontSize="16" HorizontalAlignment="Center" Margin="20,30,20,10"/>
+                <StackPanel Orientation="Horizontal" Margin="20,10,20,10">
+                    <TextBlock Text="Monitor name" Margin="5" Foreground="White" FontSize="14" HorizontalAlignment="Stretch" Width="160"/>
+                    <TextBox Width="200" HorizontalAlignment="Center" Name="monitor_name_text" Height="20" Text="DB-Server"/>
+                </StackPanel>
+                <Separator Margin="20,10,20,10"/>
+                <StackPanel Orientation="Horizontal" Margin="20,10,20,10">
+                    <TextBlock Text="Host Name/IP" Margin="5" Foreground="White" FontSize="14" HorizontalAlignment="Stretch" Width="160"/>
+                    <TextBox Width="200" HorizontalAlignment="Center" Name="host_name_text" Height="20" Text="e.g: 172.16.17.18 or example.com"/>
+                </StackPanel>
+                <Separator Margin="20,10,20,10"/>
+                <StackPanel Orientation="Horizontal" Margin="20,10,20,10">
+                    <TextBlock Text="Port" Margin="5" Foreground="White" FontSize="14" HorizontalAlignment="Stretch" Width="160"/>
+                    <TextBox Width="100" HorizontalAlignment="Center" Name="port_text" Height="20" Text="19797"/>
+                </StackPanel>
+                <TextBlock Text="Change port only if you are running the poller service in a different port." Margin="5" Foreground="White" FontSize="12" 
+                           HorizontalAlignment="Center"/>
+                <Separator Margin="20,10,20,10"/>
+                <StackPanel Orientation="Horizontal" Margin="20,10,20,10">
+                    <TextBlock Text="Polling Frequency (in sec)" Margin="5" Foreground="White" FontSize="14" HorizontalAlignment="Stretch" Width="160"/>
+                    <TextBox Width="100" HorizontalAlignment="Center" Name="polling_text" Height="20" Text="30"/>
+                </StackPanel>
+                <Separator Margin="20,10,20,10"/>
+                <Button Name="monitor_save_button" Height="30" Width="100" Style="{DynamicResource BlueButton}"  Margin="20,10,20,10" Click="monitor_save_button_Click">
+                    <TextBlock FontSize="14" Foreground="White">Save</TextBlock>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

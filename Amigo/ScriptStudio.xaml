@@ -1,0 +1,286 @@
+﻿<UserControl x:Class="Amigo.ScriptStudio"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Amigo"
+             xmlns:myEnum="clr-namespace:Amigo.ViewModels"
+             xmlns:System="clr-namespace:System;assembly=mscorlib" 
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="EnumParamSources"  
+                        MethodName="GetValues"
+                        ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="myEnum:ParamSources"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="EnumIterationType"  
+                        MethodName="GetValues"  
+                        ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="myEnum:IterationType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Grid>
+        <DockPanel VerticalAlignment="Stretch">
+            <Border x:Name="LeftBorder" DockPanel.Dock="Left" Style="{DynamicResource ResourceKey=BorderStyle}">
+                <TabControl VerticalAlignment="Stretch" Height="Auto" VerticalContentAlignment="Center" 
+                            Style="{DynamicResource BreadCrumbTabControl}" HorizontalContentAlignment="Stretch" 
+                            HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
+                    
+                    <TabItem VerticalContentAlignment="Stretch" Header="Script Perspective" 
+                             Style="{DynamicResource LeftTabItem}" FontSize="15" Background="Transparent" BorderThickness="0">
+                        <TreeView Name="script_root_tree" Foreground="White" Background="Transparent" 
+                                  SelectedItemChanged="script_root_tree_SelectedItemChanged" AllowDrop="True" BorderThickness="0" Margin="0,10,0,0">
+                                <TreeViewItem Name="recording_sessions" Foreground="White" ItemsSource="{Binding RecordingSessions, Mode=TwoWay}" IsExpanded="{Binding toExpanded, Mode=OneWay}" IsSelected="False" ContextMenuOpening="recording_sessions_ContextMenuOpening">
+                                    <TreeViewItem.ContextMenu>
+                                        <ContextMenu StaysOpen="true">
+                                            <MenuItem Header="Record a script into this project" Click="MenuItem_record_script_Into_project_Click">
+                                                <MenuItem.Icon>
+                                                    <Image Source="pack://application:,,,/icons/microphone.png" Height="20" Width="20"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Header="Rename Project" Click="rename_project_click">
+                                                <MenuItem.Icon>
+                                                    <Image Source="pack://application:,,,/icons/rename.png" Height="20" Width="20"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Header="Close Project" Click="MenuItem_Close_Project_Click">
+                                                <MenuItem.Icon>
+                                                    <Image Source="pack://application:,,,/icons/close.png" Height="20" Width="20"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Header="Export Project">
+                                                <MenuItem.Icon>
+                                                    <Image Source="pack://application:,,,/icons/export.png" Height="20" Width="20"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Header="Import Project">
+                                                <MenuItem.Icon>
+                                                    <Image Source="pack://application:,,,/icons/export.png" Height="20" Width="20"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Header="Delete Project" Click="MenuItem_delete_Project_Click">
+                                                <MenuItem.Icon>
+                                                    <Image Source="pack://application:,,,/icons/delete.png" Height="20" Width="20"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </TreeViewItem.ContextMenu>
+                                    <TreeViewItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/icons/projects_folder.png" Height="30" Width="30"/>
+                                            <Label Name="script_name" Foreground="White" Content="{Binding ProjectName, Mode=OneWay}" FontSize="16"/>
+                                        </StackPanel>
+                                    </TreeViewItem.Header>
+                                    <TreeViewItem.ItemTemplate>
+                                        <HierarchicalDataTemplate DataType="RecordingSession">                                            
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="pack://application:,,,/icons/session.png" Height="30" Width="25"/>
+                                                <Label Foreground="White" Content="{Binding Path=SessionName, Mode=TwoWay}">
+                                                    <Label.ContextMenu>
+                                                        <ContextMenu>                                                            
+                                                            <MenuItem Header="Delete Script along with requests" Click="MenuItem_delete_script_click">
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="pack://application:,,,/icons/delete.png" Height="20" Width="20"/>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Header="Expand" Click="MenuItem_expand_script_click">
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="pack://application:,,,/icons/expand.png" Height="20" Width="20"/>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Header="Collapse" Click="MenuItem_collapse_script_click">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="pack://application:,,,/icons/collapse.png" Height="20" Width="20"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </ContextMenu>
+                                                    </Label.ContextMenu>
+                                                </Label>
+                                            </StackPanel>
+                                        </HierarchicalDataTemplate>                                        
+                                    </TreeViewItem.ItemTemplate>
+                                </TreeViewItem>                            
+                            <TreeView.ItemContainerStyle>
+                                <Style TargetType="{x:Type TreeViewItem}">
+                                    <EventSetter Event="TreeViewItem.DragOver" Handler="treeView_DragOver"/>
+                                    <EventSetter Event="TreeViewItem.Drop" Handler="treeView_Drop"/>
+                                    <EventSetter Event="TreeViewItem.MouseMove" Handler="treeView_MouseMove"/>
+                                    <EventSetter Event="RequestBringIntoView" Handler="script_root_tree_RequestBringIntoView"/>
+                                </Style>                                
+                            </TreeView.ItemContainerStyle>
+                        </TreeView>
+                    </TabItem>
+                    <TabItem VerticalContentAlignment="Stretch" Header="Server Perspective" Style="{DynamicResource BreadCrumbTabItem}" FontSize="15" Background="Transparent" BorderThickness="0">
+                        <TreeView Name="root_tree" Foreground="White" Background="Transparent" ToolTip="Please create/open a project" BorderThickness="0">
+                            <TreeViewItem Name="request_referers" Foreground="White" ItemsSource="{Binding RequestReferers, Mode=TwoWay}" IsExpanded="{Binding toExpanded, Mode=OneWay}">
+                                <TreeViewItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="pack://application:,,,/icons/projects_folder.png" Height="30" Width="30"></Image>
+                                        <Label Name="project_name"  Foreground="White" Content="{Binding ProjectName, Mode=OneWay}" FontSize="16">
+                                        </Label>
+                                    </StackPanel>
+                                </TreeViewItem.Header>
+                                <TreeViewItem.ItemTemplate>
+                                    <HierarchicalDataTemplate DataType="RequestReferer">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/icons/server.png" Height="30" Width="30"></Image>
+                                            <Label Foreground="White" Content="{Binding Path=Referer, Mode=TwoWay}">
+                                                <Label.ContextMenu>
+                                                    <ContextMenu StaysOpen="true">
+                                                        <MenuItem Header="Delete all requests under this server" Click="delete_all_request_for_this_server">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="pack://application:,,,/icons/delete.png" Height="20" Width="20"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </ContextMenu>
+                                                </Label.ContextMenu>
+                                            </Label>                                            
+                                        </StackPanel>
+                                    </HierarchicalDataTemplate>
+                                </TreeViewItem.ItemTemplate>
+                            </TreeViewItem>
+                        </TreeView>
+                    </TabItem>
+                </TabControl>
+            </Border>
+            <Border x:Name="RightBorder" DockPanel.Dock="Right" Style="{DynamicResource ResourceKey=BorderStyle}" MaxWidth="290">
+                <StackPanel>
+                    <StackPanel Name="help_topics_stack_panel" Visibility="{Binding Path=InfoPanelsVisibility, Mode=TwoWay}">
+                        <Border DockPanel.Dock="Top" Height="700" Width="290" Style="{DynamicResource ResourceKey=BorderStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Help Topics" FontSize="18" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,20"/>
+                                <TreeView Background="Transparent">
+                                    <TreeViewItem Header="Choose a topic below" IsExpanded="True" Foreground="White">
+                                        <TreeViewItem Header="Architecture of this tool" Foreground="White"/>
+                                        <TreeViewItem Header="How this tool works" Foreground="White"/>
+                                        <TreeViewItem Header="Parameterization" Foreground="White"/>
+                                        <TreeViewItem Header="What is yummy cookies" Foreground="White"/>
+                                    </TreeViewItem>
+                                </TreeView>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Name="header_stack_panel" Visibility="{Binding Path=ParamPanelsVisibility, Mode=TwoWay}">
+                        <Border DockPanel.Dock="Top" Style="{DynamicResource ResourceKey=BorderStyle}" Height="700">
+                            <StackPanel>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="Headers" FontSize="18" FontWeight="Bold"/>
+                                <DataGrid Name="header_data_grid" 
+                                  ItemsSource="{Binding RequestHeaders, Mode=TwoWay}" 
+                                  AutoGenerateColumns="True" 
+                                  Background="Transparent"
+                                  CanUserReorderColumns="False"
+                                  HorizontalScrollBarVisibility="Auto" 
+                                  VerticalScrollBarVisibility="Auto"></DataGrid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>                    
+                </StackPanel>
+            </Border>
+            <Border Name="center_pane" Style="{DynamicResource ResourceKey=BorderStyle}">
+                <StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Height="600" Name="information_stack_panel" Visibility="{Binding Path=InfoPanelsVisibility, Mode=TwoWay}">
+                        <TextBlock Text="Welcome to Amigo Load Tester" FontSize="32" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,5"/>
+                        <TextBlock Text="The friendliest, smartest and efficient way of load testing" FontSize="18" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,5"/>
+                        <Separator Margin="100,5,100,5"/>
+                        <TextBlock Text="Top 10 Important capabilities of Amigo:" FontSize="20" Foreground="White"
+                                    HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,1,0,1"/>
+                        <Image Source="pack://application:,,,/icons/winner.png" Height="100" Width="100"/>
+                        <TextBlock Text="1. There is no script. Hence no language, no syntax, no compiling and hence no script error" 
+                                   FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                        <TextBlock Text="2. Supports All browsers. Yes! All browsers and all versions." FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                        <TextBlock Text="3. Supports thick clients, thin clients and any client that speaks in HTTP(s)." FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                        <TextBlock Text="4. Supports HTTP and HTTPS traffic including AJAX." FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                        <TextBlock Text="5. Automatic proxy retrieve and setting, no worry about changing Browser Proxy." FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                        <TextBlock Text="6. Automatic parameter creation and Automatic correlation." FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                        <TextBlock Text="7. Script replay and verification with live browser view." FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                        <TextBlock Text="8. Script portability. i.e Change the target server without modifying the scripts." FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                        <TextBlock Text="9. One click scenario creation." FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                        <TextBlock Text="10. One click report generation from historical test result." FontSize="16" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,5,0,5"/>
+                    </StackPanel>
+                    </ScrollViewer>
+                    <StackPanel Name="parameter_stack_panel" Visibility="{Binding Path=ParamPanelsVisibility, Mode=TwoWay}">
+                        <StackPanel Orientation="Horizontal" Height="50">
+                            <Button Name="host_parameterization_button" Style="{DynamicResource BlueButton}" Foreground="White" Height="40" IsEnabled="False" Margin="50,5,5,5" Click="host_parameterization_button_Click">
+                                <DockPanel Margin="5">
+                                    <Image Source="pack://application:,,,/icons/parameterize.png" Height="32" Width="32"></Image>
+                                    <TextBlock Text=" Parameterize Host/Port  " Height="25" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </Button>
+                            <Button Name="validate_parameterization_button" Style="{DynamicResource BlueButton}" Foreground="White" Height="40" IsEnabled="False" Margin="50,5,5,5" Click="validate_parameterization_button_Click">
+                                <DockPanel Margin="5">
+                                    <Image Source="pack://application:,,,/icons/save_project.png" Height="32" Width="32"></Image>
+                                    <TextBlock Text="  Save Parameterization  " Height="25" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </Button>
+                            <Button Name="check_whole_script_button" Style="{DynamicResource BlueButton}" Foreground="White" Height="40" IsEnabled="{Binding Path=ReplayButtonStatus}" Margin="50,5,5,5" 
+                                    Click="check_whole_script_button_Click">
+                                <DockPanel Margin="5">
+                                    <Image Source="pack://application:,,,/icons/verify.png" Height="32" Width="32"></Image>
+                                    <TextBlock Text="  Replay and Verify  " Height="25" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </Button>
+                        </StackPanel>
+                        <DataGrid Name="param_data_grid"
+                                  AlternatingRowBackground="LightBlue"
+                                  ItemsSource="{Binding Parameters, Mode=TwoWay}"
+                                  AutoGenerateColumns="False"
+                                  Background="Transparent"
+                                  ColumnHeaderHeight="50"
+                                  CanUserReorderColumns="False"
+                                  BeginningEdit="param_data_grid_BeginningEdit"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Height="600">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Path=ParamName}" Header="Param Name"/>
+                                <DataGridTextColumn Binding="{Binding Path=OriginalParamValue}" Header="Original Param Value" />
+                                <DataGridTemplateColumn x:Name="param_data_source" Header="Parameter Data Source">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding Source={StaticResource EnumParamSources}}" Background="Transparent" SelectedItem="{Binding Path=ParameterizationSource, Mode=TwoWay}" SelectionChanged="ComboBox_SelectionChanged">
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Binding="{Binding Path=SubstututedParamValue}" Header="Substituted value / CSV"/>
+                                <DataGridTemplateColumn x:Name="csv_column_name" Header="CSV Column Name">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding Path=CSVColumns, Mode=TwoWay}" Background="Transparent" SelectedItem="{Binding Path=SelectedCSVColumnName, Mode=TwoWay}" SelectionChanged="CSV_ComboBox_SelectionChanged">
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>                            
+                                <DataGridTemplateColumn x:Name="iteration_mode" Header="Iteration Mode">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding Source={StaticResource EnumIterationType}}" Background="Transparent" SelectedItem="{Binding Path=SelectedIterationType, Mode=TwoWay}" SelectionChanged="Itreation_ComboBox_SelectionChanged">
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>                    
+                </StackPanel>
+            </Border>            
+        </DockPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,12 @@
+﻿<Window x:Class="Amigo.StatusBar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="100" Width="400" Title="Processing recorded requests">
+    <Border Height="auto" Width="auto" Style="{DynamicResource ResourceKey=BorderStyle}">
+        <Grid>
+            <TextBlock Name="progresstext" Text="{Binding StatusNow, Mode=OneWay}" HorizontalAlignment="Center" FontSize="16" Foreground="White">   
+            </TextBlock>
+            <ProgressBar Name="myProgressBar" Width="130" Value="{Binding StatusNow, Mode=TwoWay}" Height="30"></ProgressBar>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Amigo.HostPortParameterization"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <Grid>
+        <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="New host name" Margin="5" Foreground="White" FontSize="14" HorizontalAlignment="Center" Height="20"/>
+                    <Separator/>
+                    <TextBox Width="200" HorizontalAlignment="Center" Name="host_name_text_box" Height="20"/>
+                    <Separator/>
+                    <TextBlock Text="New Port" Margin="5" Foreground="White" FontSize="14" HorizontalAlignment="Center" Height="20"/>
+                    <Separator/>
+                    <TextBox Width="50" HorizontalAlignment="Center" Name="port_text_box" Height="20"/>
+                    <Separator/>
+                    <Button Name="host_param_create" Height="30" Width="50" Style="{DynamicResource BlueButton}" Margin="50,10,10,10" Click="host_param_create_Click">
+                        <TextBlock FontSize="14" Foreground="White">Create</TextBlock>
+                    </Button>
+                    <TextBox Name="hidden_request_id" Visibility="Hidden"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Name="error_message" Visibility="Hidden" Background="White" FontSize="16" HorizontalContentAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

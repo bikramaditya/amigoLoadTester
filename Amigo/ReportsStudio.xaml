@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="Amigo.ReportsStudio"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Amigo" 
+             mc:Ignorable="d" 
+             xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Name="LayoutRoot">
+        <DockPanel VerticalAlignment="Stretch" MinHeight="640">
+            <Border DockPanel.Dock="Left" Style="{DynamicResource ResourceKey=BorderStyle}" Width="350" >
+                <TreeView Name="execution_root_tree" Foreground="White" Background="Transparent" AllowDrop="True" BorderThickness="0" Margin="0,10,0,0">
+                    <TreeViewItem Name="test_exec_tree_item" Foreground="White" ItemsSource="{Binding TestExecutions, Mode=TwoWay}" IsExpanded="True" IsSelected="False" BorderThickness="0">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="pack://application:,,,/icons/projects_folder.png" Height="30" Width="30" />
+                                    <Label Name="project_name" Foreground="White" Content="{Binding ProjectName, Mode=OneWay}" FontSize="16" FontWeight="Normal"/>
+                                </StackPanel>
+                                <TextBlock Name="retrivalCounter" Text="Retrieving...    Count: " Margin="35,10" Visibility="Hidden"/>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                        <TreeViewItem.ItemTemplate>
+                            <HierarchicalDataTemplate DataType="KeyValuePair">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Image Source="pack://application:,,,/icons/execute.png" Height="22" Width="22" Margin="15,0,0,0" />
+                                    <Label Foreground="White" Content="{Binding Path=Value, Mode=OneWay}" Margin="5,0,0,0" FontSize="12" FontWeight="Normal"/>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </TreeViewItem.ItemTemplate>
+                    </TreeViewItem>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <EventSetter Event="RequestBringIntoView" Handler="execution_root_tree_RequestBringIntoView"/>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                </TreeView>
+            </Border>
+            <Border DockPanel.Dock="Right" Style="{DynamicResource ResourceKey=BorderStyle}" Width="290">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Height="540">
+                        <TreeView Name="folder_root_tree" Foreground="White" Background="Transparent" AllowDrop="True" BorderThickness="0" Margin="0,10,0,0">
+                            <TreeViewItem Name="folder_tree_item" Foreground="White" IsExpanded="True" IsSelected="False" BorderThickness="0">
+                                <TreeViewItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="pack://application:,,,/icons/folder.png" Height="36" Width="36" />
+                                        <Label Foreground="White" Content="Documents Vault" FontSize="16" FontWeight="Normal"/>
+                                    </StackPanel>
+                                </TreeViewItem.Header>                        
+                            </TreeViewItem>
+                        </TreeView>
+                    </StackPanel>
+                    <ProgressBar Name="reportProgressBar" Width="180" Height="30" Margin="10,35,1,1" Value="{Binding ProgressPercentage, Mode=TwoWay}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Report Generation Status " FontSize="14" HorizontalAlignment="Center" Margin="50,5,5,5"/>
+                        <TextBlock Name="reportProgressText"  Text="{Binding ProgressPercentage, Mode=TwoWay}" FontSize="16" HorizontalAlignment="Center" Margin="5"/>
+                        <TextBlock Text=" % " FontSize="14" HorizontalAlignment="Center" Margin="5"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Style="{DynamicResource ResourceKey=BorderStyle}">
+                <ScrollViewer>
+                <StackPanel Orientation="Vertical" >
+                    <TextBlock Text="Report Generation Screen" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                    <Grid Name="loadtest_runtime_summary_grid" HorizontalAlignment="Left" Margin="10" Visibility="Hidden">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="500" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Name of the report:" FontSize="14" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                        <TextBox Name="projectnameTextBox" Grid.Row="0" Grid.Column="1" Text="Please enter a logicaliy identifiable name"  FontSize="14" Height="30"
+                                 Foreground="Black" BorderBrush="White" BorderThickness="1." FontStyle="Italic" VerticalContentAlignment="Center" VerticalAlignment="Center" 
+                                 GotFocus="projectnameTextBox_GotFocus"  LostFocus="projectnameTextBox_LostFocus" Margin="2" Background="#CECEF6"/>
+                        <Label Grid.Row="1" Grid.Column="0" Content="Upload ur and Customer's Logos:"  FontSize="14" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="2">
+                            <TextBox Name="yourLogo" Text="Choose Your Logo"  FontSize="14" Foreground="Black" BorderBrush="White" BorderThickness=".1" Width="250" 
+                                     FontStyle="Italic" VerticalContentAlignment="Center" VerticalAlignment="Center" Height="30" GotFocus="yourLogo_GotFocus" Background="#CECEF6"/>
+                            <Separator Margin="10,0,10,0"/>
+                            <TextBox Name="customerLogo" Text="Choose Customer's Logo"  FontSize="14" Foreground="Black" BorderBrush="White" BorderThickness=".1" Width="250"
+                                     FontStyle="Italic" VerticalContentAlignment="Center" VerticalAlignment="Center" Height="30" GotFocus="customerLogo_GotFocus" Background="#CECEF6"/>
+                        </StackPanel>
+                        <Label Grid.Row="2" Grid.Column="0" Content="Description about the test:"  FontSize="14" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                        <TextBox Name="testDescription" Grid.Row="2" Grid.Column="1" Text="e.g. This test was carried out to verify the XYZEcomm Application supports...n users at x TPS" 
+                                 FontSize="12" Foreground="Black" BorderBrush="White" BorderThickness=".1" TextWrapping="Wrap" Height="100"  Margin="2" Background="#CECEF6"/>
+                        
+                        <Label Grid.Row="4" Grid.Column="0" Content="Deployment Architecture Diagram:"  FontSize="14" Foreground="White" BorderBrush="White" BorderThickness=".1"/>                    
+                        <TextBox Name="deploymentDiagramTextBox" Grid.Row="4" Grid.Column="1" Text="Click here to choose the image"  FontSize="14" Height="30"
+                                 Foreground="Black" BorderBrush="White" BorderThickness="1." FontStyle="Italic" VerticalContentAlignment="Center" VerticalAlignment="Center" 
+                                 GotFocus="deploymentDiagramTextBox_GotFocus"  Margin="2" Background="#CECEF6"/>
+
+                        <Label Grid.Row="5" Grid.Column="0" Content="Web Servers:"  FontSize="14" Foreground="White" BorderBrush="White" BorderThickness=".1"/>                    
+                        <TextBox Name="webServersTextBox" Grid.Row="5" Grid.Column="1" Text="e.g. 2 Web Servers each having 8 Intel Xeon Cores 2.66 GHz and 16 GB RAM"  FontSize="12" Height="30"
+                                 Foreground="Black" BorderBrush="White" BorderThickness="1." FontStyle="Italic" VerticalContentAlignment="Center" VerticalAlignment="Center" 
+                                 Margin="2" Background="#CECEF6"/>
+                    
+                        <Label Grid.Row="6" Grid.Column="0" Content="Application Servers:"  FontSize="14" Foreground="White" BorderBrush="White" BorderThickness=".1"/>                    
+                        <TextBox Name="appServersTextBox" Grid.Row="6" Grid.Column="1" Text="e.g. 4 App Servers each having 8 Intel Xeon Cores 2.66 GHz and 16 GB RAM"  FontSize="12" Height="30"
+                                 Foreground="Black" BorderBrush="White" BorderThickness="1." FontStyle="Italic" VerticalContentAlignment="Center" VerticalAlignment="Center" 
+                                 Margin="2" Background="#CECEF6"/>
+                    
+                        <Label Grid.Row="7" Grid.Column="0" Content="DB Servers:"  FontSize="14" Foreground="White" BorderBrush="White" BorderThickness=".1"/>                    
+                        <TextBox Name="dbServersTextBox" Grid.Row="7" Grid.Column="1" Text="e.g. 1 DB Server having 16 Intel Xeon Cores 2.66 GHz and 32 GB RAM"  FontSize="12" Height="30"
+                                 Foreground="Black" BorderBrush="White" BorderThickness="1." FontStyle="Italic" VerticalContentAlignment="Center" VerticalAlignment="Center" 
+                                 Margin="2" Background="#CECEF6"/>
+                    
+                        <Label Grid.Row="8" Grid.Column="0" Content="Other Servers:"  FontSize="14" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                        <TextBox Name="otherServersTextBox" Grid.Row="8" Grid.Column="1" Text="e.g. 1 LDAP Server and 1 SSO server each having 4 Intel Xeon Cores 2.66 GHz and 8 GB RAM"  FontSize="12" Height="30"
+                                 Foreground="Black" BorderBrush="White" BorderThickness="1." FontStyle="Italic" VerticalContentAlignment="Center" VerticalAlignment="Center" 
+                                 Margin="2" Background="#CECEF6"/>
+                                           
+                        <Label Grid.Row="10" Grid.Column="0" Content="Choose report format:"  FontSize="14" Foreground="White" BorderBrush="White" BorderThickness=".1"/>
+                        <Border Grid.Row="10" Grid.Column="1" BorderBrush="White" BorderThickness=".5" Margin="2" Height="30">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <RadioButton Name="RadioPDF" FontSize="14" Foreground="White" Margin="2,2,0,0" IsEnabled="False">
+                                    <DockPanel>
+                                        <Image Source="pack://application:,,,/icons/pdf.png" Height="28" Width="28"></Image>
+                                        <TextBlock Text="Adobe PDF" FontSize="12" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    </DockPanel>
+                                </RadioButton>
+                                <RadioButton Name="RadioDOCX" FontSize="14" Foreground="White" Margin="35,2,0,0" IsChecked="True">
+                                    <DockPanel>
+                                        <Image Source="pack://application:,,,/icons/docx.png" Height="28" Width="28"></Image>
+                                        <TextBlock Text="MS DOCX" FontSize="12" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    </DockPanel>
+                                </RadioButton>
+                                    <RadioButton Name="RadioHTML" FontSize="14" Foreground="White" Margin="35,2,0,0" IsEnabled="False">
+                                    <DockPanel>
+                                        <Image Source="pack://application:,,,/icons/web_page.png" Height="28" Width="28"></Image>
+                                        <TextBlock Text="HTML" FontSize="12" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    </DockPanel>
+                                </RadioButton>                                
+                            </StackPanel>
+                        </Border>
+                        <Button Name="save_button"  Grid.Row="11" Grid.Column="0" FontSize="18" Foreground="White" Style="{DynamicResource BlueButton}" IsEnabled="True"
+                                Height="40" Width="200" HorizontalAlignment="Left" Margin="40,20,0,0" Click="save_button_Click">
+                            <DockPanel Margin="5">
+                                <Image Source="pack://application:,,,/icons/save_project.png" Height="32" Width="32"></Image>
+                                <TextBlock Text="Save Above Details" FontSize="15" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                            </DockPanel>
+                        </Button>
+                        <Button Name="generate_button" Grid.Row="11" Grid.Column="1" FontSize="18" Foreground="White" Style="{DynamicResource BlueButton}" IsEnabled="False"
+                                Height="40" Width="200" Margin="0,20,0,0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Click="generate_button_Click">
+                            <DockPanel Margin="5">
+                                <Image Source="pack://application:,,,/icons/report.png" Height="32" Width="32"></Image>
+                                <TextBlock Text="Generate Report" FontSize="15" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            </DockPanel>
+                        </Button>
+                    </Grid>                   
+                </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </DockPanel>
+    </Grid>
+</UserControl>

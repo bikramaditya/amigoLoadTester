@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="Amigo.TransactionName"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="250" Width="350" Name="TxnNameUC">
+    <Grid>
+        <Border Height="auto" Width="auto" Style="{DynamicResource ResourceKey=BorderStyle}">
+            <StackPanel>
+                <TextBlock Text="Enter the transaction/functionality/page name" Margin="5" Foreground="White" FontSize="14" HorizontalAlignment="Center"/>
+                <Separator/>
+                <TextBlock Name="error_message" Margin="5" Foreground="White" FontSize="14" HorizontalAlignment="Center"/>
+                <Separator/>
+                <ProgressBar Name="myProgressBar" Width="200" Value="{Binding StatusNow, Mode=TwoWay}" Height="30" Visibility="Hidden" />
+                <Separator/>
+                <TextBox Width="200" IsEnabled="{Binding script_name_text_status, Mode=TwoWay}" HorizontalAlignment="Center" Name="script_name_text" Margin="30,2,30,2"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button IsEnabled="{Binding start_button_status, Mode=TwoWay}" Name="start_button" Height="30" Width="70" Style="{DynamicResource BlueButton}" Click="start_button_Click" Margin="70,10,30,10">
+                        <TextBlock FontSize="14" Foreground="White">Start Txn</TextBlock>
+                    </Button>                    
+                    <Separator/>
+                    <Button IsEnabled="{Binding end_button_status, Mode=TwoWay}" Name="end_button" Height="30" Width="70" Style="{DynamicResource BlueButton}" Click="end_button_Click" Margin="35,2,30,2">
+                        <TextBlock FontSize="14" Foreground="White">End Txn</TextBlock>
+                    </Button>
+                </StackPanel>
+                <Button IsEnabled="{Binding start_button_status, Mode=TwoWay}" Name="quit_button" Height="30" Width="100" Style="{DynamicResource RedButton}" Click="quit_button_Click" Margin="35,2,30,2">
+                    <TextBlock FontSize="14" Foreground="White">Quit Recording</TextBlock>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,63 @@
+﻿<Application x:Class="Amigo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml"
+             xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             Exit="Application_Exit">
+    <Application.Resources>
+        <ResourceDictionary>            
+            <Style x:Key="selectionStyle">
+                <Style.Resources>                    
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Green" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="LightGreen" Opacity=".4"/>
+                </Style.Resources>
+            </Style>            
+            <Style x:Key="WhiteLegendStyle" TargetType="Control">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Height" Value="0"/>
+                <Setter Property="Width" Value="0"/>
+            </Style>
+            <Style x:Key="BlackLegendStyle" TargetType="Control">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="12" />                
+            </Style>
+            <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="#2F4B77" Offset="0"/>
+                            <GradientStop Color="#6C91C6" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="BorderThickness" Value="0.2" />                
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+            </Style>
+            <Style x:Key="ZeroBorderStyle" TargetType="{x:Type Border}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="#2F4B77" Offset="0"/>
+                            <GradientStop Color="#6C91C6" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+            </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="BreadCrumb.xaml"/>
+                <ResourceDictionary Source="RoundedButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
